@@ -1,18 +1,13 @@
 {
   "presets": [
-    [
-      "@babel/env",
-      {
-        "spec": true,
-        "useBuiltIns": false
-      }
-    ]
+    "react-app"
   ],
   "plugins": [
     [
-      "@babel/plugin-transform-react-jsx",
+      "import",
       {
-        "pragma": "Nerv.createElement"
+        "libraryName": "antd",
+        "style": true
       }
     ]
   ]

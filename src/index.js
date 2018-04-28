@@ -1,8 +1,8 @@
-/**
- * 入口文件
- */
-import Nerv from 'nervjs'
-// 引入组件
-import App from './App'
- 
-Nerv.render(<App />, document.getElementById('app'))
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();

@@ -1,29 +1,21 @@
-import Nerv from 'nervjs'
-// import { Component, createElement } from 'nervjs'
-// 引入组件
-import SideMenu from './components/SideMenu/SideMenu'
-import Home from './pages/Home/Home.js'
- 
-class App extends Nerv.Component {
-  // 构造器
-  constructor () {
-    super(...arguments)
-    this.state = {
-      message: ''
-    }
-  }
-  
-  // 渲染
-  render () {
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+
+class App extends Component {
+  render() {
     return (
-      <div>
-        {/*左侧菜单*/}
-        <SideMenu />
-        {/*左侧内容部分*/} 
-        <Home />
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
       </div>
-    )
+    );
   }
 }
- 
+
 export default App;
