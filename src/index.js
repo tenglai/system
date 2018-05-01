@@ -2,9 +2,7 @@
  * 项目入口文件
  */
 import React from 'react';
-import {
-  render
-} from 'react-dom'
+import ReactDOM from 'react-dom';
 /**
  * 引入 redux
  * createStore
@@ -12,21 +10,13 @@ import {
  * combineReducers
  * compose
  */
-import {
-  createStore,
-  applyMiddleware,
-  combineReducers,
-  compose
-} from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 /**
  * 引入 react-redux
  * connect
  * Provider
  */
-import {
-  connect,
-  Provider
-} from 'react-redux';
+import { connect, Provider } from 'react-redux';
 /**
  * 引入 createSagaMiddleware
  * createSagaMiddleware
@@ -39,12 +29,7 @@ import createSagaMiddleware from 'redux-saga';
  * routerMiddleware
  * push
  */
-import {
-  ConnectedRouter,
-  routerReducer,
-  routerMiddleware,
-  push
-} from 'react-router-redux';
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
 /**
  * 引入 ant-design 样式表
  */
@@ -56,21 +41,16 @@ import createHistory from 'history/createBrowserHistory';
  * Route
  * Switch
  */
-import {
-  Route,
-  Switch
-} from 'react-router';
+import { Route, Switch } from 'react-router';
 /**
  * 引入 react-router-dom
  * Redirect 重定向
  */
-import {
-  Redirect
-} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 /**
  * 引入 reducer
  */
-import reducer from './redux'
+import reducer from './redux';
 
 /**
  * 引入 主文件
@@ -100,7 +80,7 @@ export {
   store
 };
 
-render(
+ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
@@ -110,3 +90,5 @@ render(
   </Provider>,
   document.getElementById('root')
 );
+
+// ReactDOM.render(<App />, document.getElementById('root'));
