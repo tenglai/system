@@ -36,19 +36,21 @@ class Main extends Component {
   // 渲染
   render() {
     return (
-      <Button type="primary" onClick={this.showModal}>打开模态框</Button>
-      <Modal
-        title="Basic Modal"
-        visible={this.state.visible}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
-      >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </Modal>
+      <div>
+        <Button type="primary" onClick={this.showModal}>打开模态框</Button>
+        <Modal
+          title="Basic Modal"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Modal>
+      </div>
     );
   }
 }
 
-export default App;
+export default Main;
