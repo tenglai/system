@@ -29,14 +29,12 @@ import {
  * 引入 路由
  */
 import { getRouterData } from './common/router';
+
+import Authorized from './utils/Authorized';
 /**
  * 引入 ant-design 样式表
  */
 import 'ant-design-pro/dist/ant-design-pro.css';
-
-import RenderAuthorized from 'ant-design-pro/lib/Authorized';
-
-const Authorized = RenderAuthorized('');
 
 const { AuthorizedRoute } = Authorized;
 

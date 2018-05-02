@@ -46,12 +46,13 @@ class LoginPage extends Component {
   // 登录按钮点击事件
   onSubmit = (err, values) => {
     const { type } = this.state;
-    // 向 redux 传参,调用 action
-    this.props.dispatch({
-      type: 'loading'
-    })
 
     if(!err){
+      // 向 redux 传参,调用 action
+      this.props.dispatch({
+        type: 'loading'
+      })
+
       setTimeout(() => {
         this.props.dispatch({
           type:'getToken',
