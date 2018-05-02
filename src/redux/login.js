@@ -3,7 +3,6 @@
  */
 // 严格模式
 'use strict'
-import { combineReducers } from 'redux';
 // 初始化状态
 const initstate = {
   status: undefined, // 状态
@@ -15,7 +14,7 @@ function login(state = initstate, {type,payload}){
   // 判断
   switch(type){
     case 'commonlogin': // 账号密码登录
-    console.log(payload); // {status: "ok", type: "account"}
+    // console.log(payload); // {status: "ok", type: "account"}
       return {
         ...state,
         status:payload.status,

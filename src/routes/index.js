@@ -9,11 +9,13 @@ import {
 import LoginPage from './login/index';
 // 引入 首页
 import Main from './home/index';
+// 引入 用戶
+import User from './user/index';
 
 const baseRoute = () => (
   <div>
     {/*exact用于精准匹配路径，不用exact也会匹配到匹配的路径的子路径*/}
-    <Route exact path="/" component={LoginPage} />
+    <Route exact path="/login" component={LoginPage} />
     <Route exact path="/home" component={Main} />
   </div>
 );

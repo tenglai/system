@@ -8,11 +8,14 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 // 引入 login reducer
 import login from './login';
+// 引入 全局函数
+import global from './global';
 
 // 配置项
 const config = {
   routerReducer,
   login,
+  global,
 }
 
 // 向外暴露

@@ -1,58 +1,89 @@
 /**
  * 首页(Main)
  */
-import React, { Component } from 'react';
-// 引入 UI库
-import { Button, Modal } from 'antd';
-// 创建类
-class Main extends Component {
-  // // 构造器
-  // constructor(props) {
-  //   super(props);
-  //   // 默认值
-  //   this.state = {
-  //     visible: false
-  //   };
-  // }
+import React ,{Component} from 'react'
+import DocumentTitle from 'react-document-title'
+import { Layout, Icon, message, Menu} from 'antd';
+import {Switch,Route} from 'react-router-dom'
+import classNames from 'classnames';
+import { enquireScreen } from 'enquire-js';
+import logo from '../../assets/logo.svg';
+import styles from  './home.less';
+import SiderMenu from '../../components/SiderMenu';
+import GlobalHeader from '../../components/GlobalHeader';
+import User from '../user';
 
+const { Header, Sider, Content } = Layout;
+
+const query = {
+  'screen-xs': {
+    maxWidth: 575,
+  },
+  'screen-sm': {
+    minWidth: 576,
+    maxWidth: 767,
+  },
+  'screen-md': {
+    minWidth: 768,
+    maxWidth: 991,
+  },
+  'screen-lg': {
+    minWidth: 992,
+    maxWidth: 1199,
+  },
+  'screen-xl': {
+    minWidth: 1200,
+  },
+};
+
+let isMobile;
+enquireScreen((b) => {
+  isMobile = b;
+});
+ 
+class Main extends Component{
   state = {
-    visible: false
+    collapsed: false,
   };
 
-  showModal = () => {
-    this.setState({
-      visible: true
-    });
+  componentDidMount() {
+    enquireScreen((mobile) => {
+      this.setState({
+        isMobile: mobile,
+      });
+    });   
   }
 
-  handleOk = (e) => {
-    this.setState({
-      visible: false
-    });
-  }
-
-  handleCancel = (e) => {
-    this.setState({
-      visible: false
-    });
+  getPageTitle() {
+    return "主页";
   }
 
   // 渲染
   render() {
+    const layout = (
+      <Layout>
+        <SiderMenu 
+          collapsed={this.state.collapsed}
+          isMobile={this.state.isMobile}  
+        />
+
+        <Layout>
+          <GlobalHeader 
+            collapsed={this.state.collapsed}
+          />
+          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+            <Switch>
+              <Route exact path="/user" component={User} />
+            </Switch>
+          </Content>
+        </Layout>
+      </Layout>
+    )
+
     return (
-      <div>
-        <Button type="primary" onClick={this.showModal}>打开模态框</Button>
-        <Modal
-          title="Basic Modal"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Modal>
-      </div>
+      <DocumentTitle title={this.getPageTitle()}>
+        {layout}
+      </DocumentTitle>
     );
   }
 }
