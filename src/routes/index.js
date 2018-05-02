@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 // 引入 路由
-import { Route, Link, Switch } from 'react-router-dom';
-// 引入 页面
+import {
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
+// 引入 登录页
 import LoginPage from './login/index';
+// 引入 首页
 import Main from './home/index';
 
 const baseRoute = () => (

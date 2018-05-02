@@ -149,14 +149,7 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              // 改动: 添加 antd 按需加载文件处理插件
-              plugins: [
-                ['react-html-attrs'],//添加babel-plugin-react-html-attrs组件的插件配置
-                // 引入样式为 css
-                ['import', { libraryName: 'antd', style: 'css' }],
-                // 改动4: 引入样式为 less
-                //  ['import', { libraryName: 'antd', style: true }],
-              ],
+              
               compact: true,
             },
           },
@@ -172,59 +165,6 @@ module.exports = {
           // tags. If you use code splitting, however, any async bundles will still
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
-          {
-            test: /\.less$/,
-            exclude: /node_modules|antd\.css/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve('style-loader'),
-                    options: {
-                      hmr: false,
-                    },
-                  },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        modules:true,
-                        localIdentName:'[name]__[local]__[hash:base64:5]',
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
-                      },
-                    },
-                    {
-                      loader: require.resolve('less-loader') // compiles Less to CSS
-                    }
-                  ],
-                },
-                extractTextPluginOptions
-              )
-            ),
-            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-          },
           {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract(
@@ -282,16 +222,7 @@ module.exports = {
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [
-              /\.html$/,
-              /\.(js|jsx)$/,
-              /\.(css|less)$/,
-              /\.json$/,
-              /\.bmp$/,
-              /\.gif$/,
-              /\.jpe?g$/,
-              /\.png$/,
-            ],
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },

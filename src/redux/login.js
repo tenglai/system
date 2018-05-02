@@ -17,7 +17,7 @@ function login(state = initstate, {type,payload}){
   // 判断
   switch(type){
     case 'commonlogin': // 账号密码登录
-    // console.log(payload);
+    console.log(payload);
       return {
         ...state,
         ...payload

@@ -2,7 +2,7 @@
  * 项目入口文件
  */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 /**
  * 引入 redux
  * createStore
@@ -10,13 +10,21 @@ import ReactDOM from 'react-dom';
  * combineReducers
  * compose
  */
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import {
+  createStore,
+  applyMiddleware,
+  combineReducers,
+  compose
+} from 'redux';
 /**
  * 引入 react-redux
  * connect
  * Provider
  */
-import { connect, Provider } from 'react-redux';
+import {
+  connect,
+  Provider
+} from 'react-redux';
 /**
  * 引入 createSagaMiddleware
  * createSagaMiddleware
@@ -29,19 +37,26 @@ import createSagaMiddleware from 'redux-saga';
  * routerMiddleware
  * push
  */
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import {
+  ConnectedRouter,
+  routerReducer,
+  routerMiddleware,
+  push
+} from 'react-router-redux';
 /**
- * 引入 ant-design 样式表
+ * 引入 history
  */
-import 'ant-design-pro/dist/ant-design-pro.css';
 
 import createHistory from 'history/createBrowserHistory';
 /**
  * 引入 react-router
- * Route
- * Switch
+ * Route 是路由的一个原材料，它是控制路径对应显示的组件。我们经常用的是exact、path以及component属性。
+ * Switch 常常会用来包裹Route，它里面不能放其他元素，用来只显示一个路由。
  */
-import { Route, Switch } from 'react-router';
+import {
+  Route,
+  Switch
+} from 'react-router';
 /**
  * 引入 react-router-dom
  * Redirect 重定向
@@ -51,7 +66,10 @@ import { Redirect } from 'react-router-dom';
  * 引入 reducer
  */
 import reducer from './redux';
-
+/**
+ * 引入 ant-design 样式表
+ */
+import 'ant-design-pro/dist/ant-design-pro.css';
 /**
  * 引入 主文件
  */
@@ -80,7 +98,7 @@ export {
   store
 };
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
@@ -89,6 +107,4 @@ ReactDOM.render(
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
-);
-
-// ReactDOM.render(<App />, document.getElementById('root'));
+)

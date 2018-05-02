@@ -6,14 +6,18 @@ import React, { Component } from 'react';
 import { Button, Modal } from 'antd';
 // 创建类
 class Main extends Component {
-  // 构造器
-  constructor(props) {
-    super(props);
-    // 默认值
-    this.state = {
-      visible: false
-    };
-  }
+  // // 构造器
+  // constructor(props) {
+  //   super(props);
+  //   // 默认值
+  //   this.state = {
+  //     visible: false
+  //   };
+  // }
+
+  state = {
+    visible: false
+  };
 
   showModal = () => {
     this.setState({

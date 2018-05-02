@@ -3,7 +3,12 @@
  * 异步流 redux-saga
  */
 // 引入 redux-saga
-import { put, takeEvery, fork, all } from 'redux-saga/effects';
+import {
+  put,
+  takeEvery,
+  fork,
+  all
+} from 'redux-saga/effects';
 // 登录页 模拟数据
 import loginSaga from './loginSaga';
 

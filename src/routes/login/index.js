@@ -52,7 +52,7 @@ class LoginPage extends Component {
     super(props);
     
     this.state = {
-      notice: this.state.notice, // 通知
+      notice: this.props.notice, // 通知
       type: this.props.type,
       autoLogin: this.props.autoLogin, // 自动登录
       submitting: this.props.submitting // 登录状态(旋转图标)
@@ -61,19 +61,20 @@ class LoginPage extends Component {
 
   // 提交操作
   onSubmit = (err, values) => {
-    if(this.state.type == 'tab1'){ // 账号密码登录
+    console.log('value collected ->', { ...values, autoLogin: this.state.autoLogin });
+    if (this.state.type === 'tab1') {
       this.setState({
         notice: '',
       }, () => {
         if(!err){
           this.setState({
-            submitting: true
+            submitting:true
           })
 
-          setTimeout(() => {
+          setTimeout(() => {   
             this.props.dispatch({
-              type: 'getToken',
-              payload: {
+              type:'getToken',
+              payload:{
                 ...values
               }
             })
@@ -81,6 +82,26 @@ class LoginPage extends Component {
         }
       });
     }
+    // if(this.state.type === 'tab1'){ // 账号密码登录
+    //   this.setState({
+    //     notice: '',
+    //   }, () => {
+    //     if(!err){
+    //       this.setState({
+    //         submitting: true
+    //       })
+
+    //       setTimeout(() => {
+    //         this.props.dispatch({
+    //           type: 'getToken',
+    //           payload: {
+    //             ...values
+    //           }
+    //         })
+    //       }, 1500);
+    //     }
+    //   });
+    // }
   }
 
   // 选项卡切换事件
@@ -93,12 +114,12 @@ class LoginPage extends Component {
   // 自定登录选中和取消事件
   changeAutoLogin = (e) => {
     this.setState({
-      autoLogin: e.target.checked
-    })
+      autoLogin: e.target.checked,
+    });
   }
 
   // 页面渲染
-  render() {
+  render(){
     return (
       <DocumentTitle title={'登录'}>
         <div className={styles.container}>
