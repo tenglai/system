@@ -4,11 +4,16 @@
 import {createElement} from 'react'
 import { getMenuData } from './menu';
 import pathToRegexp from 'path-to-regexp';
-
-import LoginPage from '../routes/login/index'
-import Main from '../routes/home/index'
-import User from '../routes/user/index'
-import UserLayout from '../layouts/UserLayout'
+// 登录页
+import LoginPage from '../routes/login/index';
+// 首页
+import Main from '../routes/home/index';
+// 基础页面布局页
+import BasicLayout from '../layouts/BaseLayout';
+// 用户页
+import User from '../routes/user/index';
+// 用户页(页面布局)
+import UserLayout from '../layouts/UserLayout';
 
 
 let routerDataCache;
@@ -31,13 +36,14 @@ function getFlatMenuData(menus) {
 export const getRouterData = () => {
   const routerConfig = {
     "/":{
-      component: Main
+      component: BasicLayout,
     },
     "/user":{
-      component:UserLayout 
+      component:UserLayout,
     },
     "/user/login":{
-      component:LoginPage 
+      component:LoginPage,
+      authority:'guest',
     },
   }
      

@@ -1,16 +1,20 @@
 /**
- * 页面布局 组件
+ * 管理员 页面布局 组件(管理员权限)
  */
 import React from 'react';
 
 import DocumentTitle from 'react-document-title';
 import { Icon } from 'antd';
+// 经授权的
+import Authorized from '../utils/Authorized';
 import {Switch,Link,Route,Redirect} from 'react-router-dom'
 import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
 import { getRoutes } from '../utils/utils';
 import styles from './UserLayout.less';
 import logo from '../assets/logo.svg';
 import LoginPage from '../routes/login/index'
+// 获取授权
+import { getAuthority } from '../utils/authority';
 
 const links = [{
   key: 'help',
@@ -59,6 +63,14 @@ class UserLayout extends React.PureComponent {
                     
               {getRoutes(match.path, routerData).map(item =>
                 (
+                  // <AuthorizedRoute
+                  //   key={item.key}
+                  //   path={item.path}
+                  //   component={item.component}
+                  //   exact={item.exact}
+                  //   authority={item.authority}
+                  //   redirectPath="/exception/403"
+                  // />
                   <Route
                     key={item.key}
                     path={item.path}
