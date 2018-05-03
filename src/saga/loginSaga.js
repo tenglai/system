@@ -7,7 +7,7 @@ import { put, takeEvery, call } from 'redux-saga/effects';
  * 引入 react-router-redux
  * push 页面跳转
  */
-import { push } from 'react-router-redux';
+import { push,replace } from 'react-router-redux';
 // 登录 请求
 import { login } from '../services/api';
 // 重新加载权限组件
@@ -27,7 +27,7 @@ function* logincheck({payload}){
 
     reloadAuthorized();
 
-  	yield put(push("home"))
+  	yield put(push("/"))
   }
 }
 

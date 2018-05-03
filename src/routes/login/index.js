@@ -3,8 +3,8 @@
  */
 import React, { Component } from 'react';
 /**
- * Provider提供的是一个顶层容器的作用，实现store的上下文传递
- * connect可以把state和dispatch绑定到react组件，使得组件可以访问到redux的数据
+ * Provider 提供的是一个顶层容器的作用，实现store的上下文传递
+ * connect 可以把state和dispatch绑定到react组件，使得组件可以访问到redux的数据
  */
 import { connect } from 'react-redux';
 /**
