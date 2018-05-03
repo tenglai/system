@@ -8,14 +8,18 @@ import pathToRegexp from 'path-to-regexp';
 import LoginPage from '../routes/login/index';
 // 首页
 import Main from '../routes/home/index';
-// 基础页面布局页
+// 基础页面(页面布局--普通用户)
 import BasicLayout from '../layouts/BaseLayout';
-// 用户页
+// 用户管理页
 import User from '../routes/user/index';
-// 用户页(页面布局)
+// 用户管理页(页面布局--管理员)
 import UserLayout from '../layouts/UserLayout';
+// 分析页
+import Analysis  from '../routes/Dashboard/Analysis'
+// 监测页
+import Monitor  from '../routes/Dashboard/Monitor'
 
-
+// 路由数据
 let routerDataCache;
 
 function getFlatMenuData(menus) {
@@ -45,6 +49,14 @@ export const getRouterData = () => {
       component:LoginPage,
       authority:'guest',
     },
+    "/dashboard/analysis":{
+      component:Analysis,
+      authority:'admin'
+    },
+    "/dashboard/monitor":{
+      component:Monitor,
+      authority:'admin'
+    }
   }
      
   const menuData = getFlatMenuData(getMenuData());

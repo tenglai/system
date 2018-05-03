@@ -54,7 +54,7 @@ render(
         />
         <AuthorizedRoute
           path="/"
-          render={props => <BaseLayout />}
+          render={props => <BaseLayout {...props} />}
           authority={['admin', 'user']}
           redirectPath="/user/login"
         />

@@ -5,8 +5,9 @@
  * PureComponent 纯组件
  * 把继承类从 Component 换成 PureComponent 即可，可以减少不必要的 render操作的次数，从而提高性能
  */
-import React, {PureComponent} from 'react'
-import DocumentTitle from 'react-document-title'
+import React, {PureComponent} from 'react';
+import DocumentTitle from 'react-document-title';
+import PropTypes from 'prop-types';
 import { Layout, Icon, message, Menu} from 'antd';
 import {Switch,Route,Redirect,HashRouter} from 'react-router-dom'
 import classNames from 'classnames';
@@ -20,8 +21,15 @@ import styles from  './BaseLayout.less';
 import SiderMenu from '../components/SiderMenu';
 // 顶部标题栏
 import GlobalHeader from '../components/GlobalHeader';
+import {connect} from 'react-redux';
+// 已经授权
+import Authorized from '../utils/Authorized';
+// 获取路由
+import { getRoutes } from '../utils/utils';
 
 const { Header, Sider, Content } = Layout;
+
+const { AuthorizedRoute } = Authorized;
 
 /**
  * 根据菜单取得重定向地址.
@@ -72,18 +80,24 @@ enquireScreen((b) => {
 });
 
 class BasicLayout extends PureComponent{
+  // 组件传参
+  static childContextTypes = {
+    location: PropTypes.object,
+    breadcrumbNameMap: PropTypes.object,
+  }
   // 初始化状态值
   state = {
-    collapsed: false,
+    isMobile,
   };
 
-  // getChildContext() {
-  //   const { location, routerData } = this.props;
-  //   return {
-  //     location,
-  //     breadcrumbNameMap: routerData,
-  //   };
-  // }
+  // 获取组件的传递的参数
+  getChildContext() {
+    const { location, routerData } = this.props;
+    return {
+      location,
+      breadcrumbNameMap: routerData,
+    };
+  }
   
   // 生命周期--组件加载完毕
   componentDidMount() {
@@ -94,8 +108,30 @@ class BasicLayout extends PureComponent{
     });
   }
   
+  // 菜单切换
+  handleMenuCollapse = (collapsed) => {
+    this.props.dispatch({
+      type: 'changeLayoutCollapsed',
+      payload: collapsed,
+    });
+  }
+
+  // 获取页面标题
   getPageTitle() {
     return "主页";
+  }
+
+  // 底部header菜单栏点击事件
+  handleMenuClick = ({ key }) => {
+    if (key === 'triggerError') {
+      //this.props.dispatch(routerRedux.push('/exception/trigger'));
+      return;
+    }
+    if (key === 'logout') {
+      this.props.dispatch({
+        type: 'logout',
+      });
+    }
   }
 
   // 根据URL参数重定向
@@ -117,29 +153,52 @@ class BasicLayout extends PureComponent{
   render() {
     // 重定向
     const bashRedirect = this.getBashRedirect();
+    // props
+    const {
+      currentUser, collapsed, fetchingNotices, notices, routerData, match, location,
+    } = this.props;
     // 布局
     const layout = (
       <Layout>
-        <SiderMenu 
-          collapsed={this.state.collapsed}
-          isMobile={this.state.isMobile}  
+        <SiderMenu
+          menuData={getMenuData()}
+          location={location}
+          collapsed={collapsed}
+          isMobile={this.state.isMobile}
+          Authorized={Authorized}
+          onCollapse={this.handleMenuCollapse}
         />
 
         <Layout>
           <GlobalHeader
-            collapsed={this.state.collapsed}
+            onCollapse={this.handleMenuCollapse}
+            onMenuClick={this.handleMenuClick}
           />
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-            <HashRouter>
-              <Switch>
-                {
-                  redirectData.map(item =>
-                    <Redirect key={item.from} exact from={item.from} to={item.to} />
+            <Switch>
+              {
+                redirectData.map(item =>
+                  <Redirect key={item.from} exact from={item.from} to={item.to} />
+                )
+              }
+
+              {
+                getRoutes(match.path, routerData).map(item =>
+                  (
+                    <AuthorizedRoute
+                      key={item.key}
+                      path={item.path}
+                      component={item.component}
+                      exact={item.exact}
+                      authority={item.authority}
+                      redirectPath="/exception/403"
+                    />
                   )
-                }
-                <Redirect exact from="/" to={bashRedirect} />
-              </Switch>
-            </HashRouter>
+                )
+              }
+
+              <Redirect exact from="/" to={bashRedirect} />
+            </Switch>
           </Content>
         </Layout>
       </Layout>
@@ -151,6 +210,11 @@ class BasicLayout extends PureComponent{
       </DocumentTitle>
     );
   }
-
 }
-export default BasicLayout;
+
+export default connect(({routerReducer,global})=>{
+  return {
+    location:routerReducer.location,
+    collapsed:global.collapsed
+  }
+})(BasicLayout);

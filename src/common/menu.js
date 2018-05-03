@@ -24,7 +24,7 @@ const menuData = [
     name: '账号',
     icon: 'user',
     path: 'user',
-    authority: 'guest',
+    authority: 'admin',
     children: [{
       name: '登录',
       path: 'login',
