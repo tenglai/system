@@ -6,7 +6,7 @@ import { notification } from 'antd';
 // 引入 axios
 import axios from 'axios';
 // 引入 store
-import store from '../index';
+import store from '../store';
 // 引入 react-router-redux
 import { push } from 'react-router-redux';
 

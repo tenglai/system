@@ -4,7 +4,7 @@
 // 引入 mock.js 创建假数据
 import Mock from 'mockjs';
 
-const logindata = Mock.mock('/login',{
+const logindata = Mock.mock('/api/login',{
   "object|2":{
   	"310000":"上海市",
   	"320000":"江苏省",
