@@ -2,7 +2,7 @@
  * 登录页数据
  */
 // 引入 redux-saga
-import { put, takeEvery, call, select } from 'redux-saga/effects';
+import { put, takeLatest, call, select } from 'redux-saga/effects';
 /**
  * 引入 react-router-redux
  * push 页面跳转
@@ -57,9 +57,9 @@ function* logout({payload}){
 // 异步登录
 function* loginSaga(){
   // 获取token
-  yield takeEvery('getToken', logincheck)
+  yield takeLatest('getToken', logincheck)
   // 注销
-  yield takeEvery('logout', logout)
+  yield takeLatest('logout', logout)
 }
 
 export default loginSaga;

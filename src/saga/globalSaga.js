@@ -1,7 +1,7 @@
 /**
  * 全局异步数据(通知栏数据)
  */
-import { put,takeEvery,call,select } from 'redux-saga/effects'
+import { put,takeLatest,call,select } from 'redux-saga/effects'
 import { queryNotices } from '../services/api';
 
 // 请求通知栏数据
@@ -35,9 +35,9 @@ function* clearNotices({payload}){
 //
 function* global() {
   // 请求通知栏数据
-  yield takeEvery('fetchNotices', fetchNotices)
+  yield takeLatest('fetchNotices', fetchNotices)
   // 清空通知栏数据
-  yield takeEvery('clearNotices', clearNotices)
+  yield takeLatest('clearNotices', clearNotices)
 }
 
 export default global;
