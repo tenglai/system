@@ -30,6 +30,13 @@ function login(state = initstate, {type,payload}){
   switch(type){
     case 'commonlogin': // 账号密码登录
       return commonlogin(state,type,payload)
+    case 'tologin': // 跳转登录
+      return {
+        ...state,
+        status:payload.status,
+        type:payload.type,
+        submitting:false,
+      }
     case 'mobilelogin': // 手机账号登录
       return state
     case 'loading': // 登录按钮显示 loading

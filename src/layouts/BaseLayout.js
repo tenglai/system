@@ -106,6 +106,14 @@ class BasicLayout extends PureComponent{
         isMobile: mobile,
       });
     });
+
+    /**
+     * 触发action
+     * 获取当前用户信息
+     */
+    this.props.dispatch({
+      type: 'fetchCurrent'
+    });
   }
   
   // 菜单切换
@@ -171,6 +179,8 @@ class BasicLayout extends PureComponent{
 
         <Layout>
           <GlobalHeader
+            currentUser={currentUser}
+            collapsed={collapsed}
             onCollapse={this.handleMenuCollapse}
             onMenuClick={this.handleMenuClick}
           />
@@ -212,9 +222,10 @@ class BasicLayout extends PureComponent{
   }
 }
 
-export default connect(({routerReducer,global})=>{
+export default connect(({routerReducer,global,user})=>{
   return {
     location:routerReducer.location,
-    collapsed:global.collapsed
+    collapsed:global.collapsed, // 菜单切换
+    currentUser:user.currentUser, // 当前用户
   }
 })(BasicLayout);

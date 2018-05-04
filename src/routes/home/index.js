@@ -62,15 +62,17 @@ class Main extends Component{
   render() {
     const layout = (
       <Layout>
+        {/*侧边菜单栏*/}
         <SiderMenu 
           collapsed={this.state.collapsed}
           isMobile={this.state.isMobile}  
         />
-
         <Layout>
+          {/*顶部 header 栏*/}
           <GlobalHeader 
             collapsed={this.state.collapsed}
           />
+          {/*内容部分*/}
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Switch>
               <Route exact path="/user" component={User} />

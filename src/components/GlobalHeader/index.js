@@ -16,9 +16,9 @@ import styles from './index.less';
 const { Header } = Layout;
 
 export default class GlobalHeader extends PureComponent {
-  // 生命周期
+  // 生命周期--组件即将销毁
   componentWillUnmount() {
-    this.triggerResizeEvent.cancel();
+    // this.triggerResizeEvent.cancel();
   }
   // 获取通知数据
   getNoticeData() {
@@ -110,7 +110,7 @@ export default class GlobalHeader extends PureComponent {
           {/*通知栏*/}
           <NoticeIcon
             className={styles.action}
-            count={2}
+            count={currentUser.notifyCount}
             onItemClick={(item, tabProps) => {
               console.log(item, tabProps); // eslint-disable-line
             }}
@@ -139,11 +139,11 @@ export default class GlobalHeader extends PureComponent {
             />
           </NoticeIcon>
           {/*用户管理*/}
-          {"ddd" ? (
+          {currentUser.name ? (
             <Dropdown overlay={menu}>
               <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} src={"https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"} />
-                <span className={styles.name}>admin</span>
+                <Avatar size="small" className={styles.avatar} src={currentUser.avatar} />
+                <span className={styles.name}>{currentUser.name}</span>
               </span>
             </Dropdown>
           ) : <Spin size="small" style={{ marginLeft: 8 }} />}

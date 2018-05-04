@@ -37,15 +37,15 @@ function* logout({payload}){
   try {
     // 获取位置路径名
     const urlParams = new URL(window.location.href);
-    const pathname = yield select(state => state.routing.location.pathname);
+    const pathname = yield select(state => state.routerReducer.location.pathname);
     // 在URL中添加参数
     urlParams.searchParams.set('redirect', pathname);
     window.history.replaceState(null, 'login', urlParams.href);
   } finally {
     yield put({
-      type: 'commonlogin',
+      type: 'tologin',
       payload: {
-        status: false,
+        status: "",
         currentAuthority: 'guest',
       },
     });
@@ -56,7 +56,10 @@ function* logout({payload}){
 
 // 异步登录
 function* loginSaga(){
+  // 获取token
   yield takeEvery('getToken', logincheck)
+  // 注销
+  yield takeEvery('logout', logout)
 }
 
 export default loginSaga;
