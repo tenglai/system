@@ -13,11 +13,14 @@ import {
 import loginSaga from './loginSaga';
 // 用户信息
 import userSaga from './userSaga';
+// 通知栏数据
+import global from './globalSaga';
 
 // 所有的saga的入口配置文件
 const config = [
   fork(loginSaga),
   fork(userSaga),
+  fork(global),
 ];
 
 export default function* rootSaga(){

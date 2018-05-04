@@ -142,6 +142,15 @@ class BasicLayout extends PureComponent{
     }
   }
 
+  // 处理通知事项变更
+  handleNoticeVisibleChange = (visible) => {
+    if (visible) {
+      this.props.dispatch({
+        type: 'fetchNotices',
+      });
+    }
+  }
+
   // 根据URL参数重定向
   getBashRedirect = () => {
     // 这里是重定向的,重定向到 url 的 redirect 参数所示地址
@@ -179,10 +188,13 @@ class BasicLayout extends PureComponent{
 
         <Layout>
           <GlobalHeader
+            fetchingNotices={fetchingNotices}
+            notices={notices}
             currentUser={currentUser}
             collapsed={collapsed}
             onCollapse={this.handleMenuCollapse}
             onMenuClick={this.handleMenuClick}
+            onNoticeVisibleChange={this.handleNoticeVisibleChange}
           />
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Switch>
@@ -227,5 +239,7 @@ export default connect(({routerReducer,global,user})=>{
     location:routerReducer.location,
     collapsed:global.collapsed, // 菜单切换
     currentUser:user.currentUser, // 当前用户
+    fetchingNotices:global.fetchingNotices, // 请求通知数据
+    notices:global.notices, // 通知数据
   }
 })(BasicLayout);
