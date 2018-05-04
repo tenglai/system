@@ -142,6 +142,15 @@ class BasicLayout extends PureComponent{
     }
   }
 
+  // 清空通知栏
+  handleNoticeClear = (type) => {
+    message.success(`清空了${type}`);
+    this.props.dispatch({
+      type: 'clearNotices',
+      payload: type,
+    });
+  }
+
   // 处理通知事项变更
   handleNoticeVisibleChange = (visible) => {
     if (visible) {
@@ -195,6 +204,7 @@ class BasicLayout extends PureComponent{
             onCollapse={this.handleMenuCollapse}
             onMenuClick={this.handleMenuClick}
             onNoticeVisibleChange={this.handleNoticeVisibleChange}
+            onNoticeClear={this.handleNoticeClear}
           />
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Switch>
