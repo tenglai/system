@@ -104,7 +104,7 @@ class UserList extends PureComponent{
           <Col md={8} sm={24}>
             <FormItem label="状态">
               {getFieldDecorator('status')(
-                <Select placeholder="请选择" style={{ width: '100%' }}>
+                <Select placeholder="请选择" style={{ width: 120 }}>
                   <Option value="0">启用</Option>
                   <Option value="1">禁用</Option>
                 </Select>
@@ -152,7 +152,9 @@ class UserList extends PureComponent{
             {this.renderAdvancedForm()}
           </div>
           <div className={styles.tableListOperator}>
-            <Button icon="plus" type="primary" >
+            <Button icon="plus" type="primary" onClick={()=>(
+              history.push("/syster/user/add")
+            )}>
               新建
             </Button>
           </div>
