@@ -7,7 +7,17 @@ import axios from 'axios';
 import request from '../utils/request';
 // 登录页数据
 import data from '../mock/loginMock';
-// 异步操作
+// 用户列表数据
+import  '../mock/userdata'
+
+// 获取用户列表数据
+export async function getuserlist(){
+  return axios.get('/api/userdata').then(function(response){
+    return response.data;
+  })
+}
+
+// 异步操作 获取登录数据
 export async function login(param){
   const { username, password, type } = param;
 

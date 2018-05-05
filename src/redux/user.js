@@ -22,7 +22,7 @@ function user(state = initstate, {type,payload}){
         ...state,
         currentUser:payload.$body
       }
-    case 'changeNotifyCount': // 
+    case 'changeNotifyCount': // 处理通知
       return {
           ...state,
           currentUser: {
@@ -30,6 +30,11 @@ function user(state = initstate, {type,payload}){
             notifyCount: payload,
           },
         };
+    case 'userList': // 用户列表数据
+      return {
+        ...state,
+        list:payload,
+      }  
     default:
       return state
   }
