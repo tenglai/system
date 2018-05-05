@@ -4,6 +4,7 @@
 // 初始状态值
 const initstate = {
   list:[],
+  listloading:true, // 列表加载状态
   currentUser:{} // 当前用户
 }
 
@@ -30,6 +31,11 @@ function user(state = initstate, {type,payload}){
             notifyCount: payload,
           },
         };
+    case 'listload': // 列表数据加载状态
+      return {
+        ...state,
+        listloading:payload,
+      }
     case 'userList': // 用户列表数据
       return {
         ...state,

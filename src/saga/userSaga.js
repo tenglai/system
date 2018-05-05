@@ -23,6 +23,11 @@ function* getUserList(){
     type:'userList',
     payload:response.users,
   })
+
+  yield put({
+    type:'listload',
+    payload:false,
+  })
 }
 
 // 用户

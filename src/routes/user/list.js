@@ -3,6 +3,7 @@
  */
 import React,{PureComponent,Fragment} from 'react'
 import {connect} from 'react-redux'
+import {history} from '../../store'
 import styles from './index.less'
 import { Row, Col, Card, Form, Input, Select, 
   Icon, Button, Dropdown, Menu, 
@@ -15,7 +16,7 @@ const {RangePicker} = DatePicker;
 const FormItem = Form.Item;
 const { Option } = Select;
 const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
-const statusMap = ['default', 'processing', 'success', 'error'];
+const statusMap = ['success', 'error'];
 const status = ['启用', '禁用',];
 const columns = [
   {
@@ -29,19 +30,19 @@ const columns = [
   {
     title: '状态',
     dataIndex: 'status',
-    // filters: [
-    //   {
-    //     text: status[0],
-    //     value: 0,
-    //   },
-    //   {
-    //     text: status[1],
-    //     value: 1,
-    //   },
-    // ],
-    // render(val) {
-    //   return <Badge status={statusMap[val]} text={status[val]} />;
-    // },
+    filters: [
+      {
+        text: status[0],
+        value: 0,
+      },
+      {
+        text: status[1],
+        value: 1,
+      },
+    ],
+    render(val) {
+      return <Badge status={statusMap[val]} text={status[val]} />;
+    },
   },
   {
     title: '创建时间',
@@ -59,38 +60,7 @@ const columns = [
   },
 ];
 
-
-const CreateForm = Form.create()((props) => {
-  const { modalVisible, form, handleAdd, handleModalVisible } = props;
-  const okHandle = () => {
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-      handleAdd(fieldsValue);
-    });
-  };
-  return (
-    <Modal
-      title="新建规则"
-      visible={modalVisible}
-      onOk={okHandle}
-      onCancel={() => handleModalVisible()}
-    >
-      <FormItem
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 15 }}
-        label="描述"
-      >
-        {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(
-          <Input placeholder="请输入" />
-        )}
-      </FormItem>
-    </Modal>
-  );
-});
-  
-
+const CreateForm = Form.create({});
 
 /**
  *  用户列表
@@ -163,7 +133,7 @@ class UserList extends PureComponent{
 
 
   render(){
-    const { list } = this.props;
+    const { list,listloading } = this.props;
 
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
@@ -186,7 +156,19 @@ class UserList extends PureComponent{
               新建
             </Button>
           </div>
-          <Table  rowSelection={rowSelection} dataSource={list} columns={columns}  />
+          <Table onChange={()=>{
+            this.props.dispatch({
+              type:"listload",
+              payload:true,
+            })
+
+            setTimeout(() => {                                    
+              this.props.dispatch({
+                type:"listload",
+                payload:false,
+              })
+            }, 1500);
+          }} loading={listloading} rowSelection={rowSelection} dataSource={list} columns={columns}  />
         </div>
       </Card>
     )
@@ -194,7 +176,5 @@ class UserList extends PureComponent{
 }
 
 export default connect (({ user })=>(
-  {
-    list: user.list
-  }
+  user
 ))(UserList)
