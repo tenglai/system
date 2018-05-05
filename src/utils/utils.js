@@ -1,5 +1,5 @@
 /**
- * 工具類
+ * 辅助类
  */
 import moment from 'moment';
 

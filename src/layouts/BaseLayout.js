@@ -1,4 +1,5 @@
 /**
+ * 后台布局
  * 基础 页面布局 组件(普通用户权限)
  */
 /**
@@ -26,6 +27,13 @@ import {connect} from 'react-redux';
 import Authorized from '../utils/Authorized';
 // 获取路由
 import { getRoutes } from '../utils/utils';
+
+import { ContainerQuery } from 'react-container-query';
+
+// 用户列表页
+import UserList from '../routes/user/list'
+// 添加用户
+import UserAdd from '../routes/user/add'
 
 const { Header, Sider, Content } = Layout;
 
@@ -178,7 +186,7 @@ class BasicLayout extends PureComponent{
       
   render() {
     // 重定向
-    const bashRedirect = this.getBashRedirect();
+    // const bashRedirect = this.getBashRedirect();
     // props
     const {
       currentUser, collapsed, fetchingNotices, notices, routerData, match, location,
@@ -229,7 +237,7 @@ class BasicLayout extends PureComponent{
                 )
               }
 
-              <Redirect exact from="/" to={bashRedirect} />
+              <Redirect exact from="/" to="/dashboard/analysis" />
             </Switch>
           </Content>
         </Layout>
@@ -238,7 +246,9 @@ class BasicLayout extends PureComponent{
 
     return (
       <DocumentTitle title={this.getPageTitle()}>
-        {layout}
+        <ContainerQuery query={query}>
+          {params => <div className={classNames(params)}>{layout}</div>}
+        </ContainerQuery>
       </DocumentTitle>
     );
   }

@@ -1,41 +1,27 @@
 /**
- * 菜单栏数据
+ * 菜单配置文件
  */
 import { isUrl } from '../utils/utils';
 // 数据
 const menuData = [
   {
-    name: 'dashboard',
+    name: '控制台',
     icon: 'dashboard',
     path: 'dashboard',
     children: [{
-      name: '分析页',
+      name: '总览',
       path: 'analysis',
-    },{
-      name: '监控页',
-      path: 'monitor',
-    },{
-      name: '工作台',
-      path: 'workplace',
-      // hideInMenu: true,
     }],
   },
   {
-    name: '账号',
+    name: '系统设置',
     icon: 'user',
-    path: 'user',
+    path: 'syster',
     authority: 'admin',
     children: [{
-      name: '登录',
-      path: 'login',
-      authority:'guest'
-    },{
-      name: '注册',
-      path: 'register',
-      authority:'guest'
-    },{
-      name: '注册结果',
-      path: 'register-result',
+      name: '用户管理',
+      path: 'user',
+      authority:'admin',
     }]
   }
 ]

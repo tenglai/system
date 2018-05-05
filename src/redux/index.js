@@ -1,5 +1,5 @@
 /**
- * redux 入口文件
+ * 所有同步redux的入口
  */
 import React from 'react';
 // 合并 reducer

@@ -1,5 +1,5 @@
 /**
- * 路由 配置
+ * 路由配置文件
  */
 import {createElement} from 'react'
 import { getMenuData } from './menu';
@@ -16,8 +16,10 @@ import User from '../routes/user/index';
 import UserLayout from '../layouts/UserLayout';
 // 分析页
 import Analysis  from '../routes/Dashboard/Analysis'
-// 监测页
-import Monitor  from '../routes/Dashboard/Monitor'
+// 用户管理页
+import UserManager from '../routes/user';
+import UserList from '../routes/user/list';
+import UserAdd from '../routes/user/add';
 
 // 路由数据
 let routerDataCache;
@@ -40,42 +42,50 @@ function getFlatMenuData(menus) {
 export const getRouterData = () => {
   const routerConfig = {
     "/":{
-      component: BasicLayout,
+      component: BasicLayout, // 后台布局
     },
     "/user":{
-      component:UserLayout,
+      component:UserLayout, // 登录布局
     },
     "/user/login":{
-      component:LoginPage,
+      component:LoginPage, // 登录页
       authority:'guest',
     },
     "/dashboard/analysis":{
-      component:Analysis,
+      component:Analysis, // 总览
       authority:'admin'
     },
-    "/dashboard/monitor":{
-      component:Monitor,
+    "/syster/user":{
+      component:UserManager, // 用户管理页
       authority:'admin'
-    }
+    },
+    "/syster/user/list":{
+      component:UserList, // 用户列表
+      authority:'admin'
+    },
+    "/syster/user/add":{
+      component:UserAdd, // 添加用户
+      authority:'admin'
+    },
   }
      
   const menuData = getFlatMenuData(getMenuData());
 
   const routerData = {};
 
-  // The route matches the menu
+  // 路由匹配菜单
   Object.keys(routerConfig).forEach((path) => {
-    // Regular match item name
+    // 匹配项名称规则
     // eg.  router /user/:id === /user/chen
     const pathRegexp = pathToRegexp(path);
     const menuKey = Object.keys(menuData).find(key => pathRegexp.test(`/${key}`));
     let menuItem = {};
-    // If menuKey is not empty
+    // 如果menuKey不是空的
     if (menuKey) {
       menuItem = menuData[menuKey];
     }
     let router = routerConfig[path];
-    // If you need to configure complex parameter routing,
+    // 如果需要配置复杂参数路由
     // https://github.com/ant-design/ant-design-pro-site/blob/master/docs/router-and-nav.md#%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E8%B7%AF%E7%94%B1%E8%8F%9C%E5%8D%95
     // eg . /list/:type/user/info/:id
     router = {

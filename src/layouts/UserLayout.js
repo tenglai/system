@@ -1,5 +1,5 @@
 /**
- * 管理员 页面布局 组件(管理员权限)
+ * 登录布局
  */
 import React from 'react';
 

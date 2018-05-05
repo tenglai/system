@@ -1,5 +1,5 @@
 /**
- * saga 入口文件
+ * 异步redux的入口
  * 异步流 redux-saga
  */
 // 引入 redux-saga
