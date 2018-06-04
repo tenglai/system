@@ -242,7 +242,7 @@ export default class SiderMenu extends PureComponent {
         <div className={styles.logo}>
           <a href="/">
             <img src={logo_url} alt="logo" />
-            <h1>微信后台管理系统</h1>
+            <h1>润安科技管理系统</h1>
           </a>
         </div>
         {/*菜单*/}
