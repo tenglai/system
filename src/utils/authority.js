@@ -1,13 +1,22 @@
-// 使用LoalStand存储权限信息，可以在实际项目中发送给服务器。
-/**
- * 获取权限
- */
-export function getAuthority() {
-  return localStorage.getItem('antd-pro-authority');
+// use localStorage to store the authority info, which might be sent from server in actual project.
+export function getAuthority(str) {
+  // return localStorage.getItem('antd-pro-authority') || ['admin', 'user'];
+  const authorityString =
+    typeof str === 'undefined' ? localStorage.getItem('antd-pro-authority') : str;
+  // authorityString could be admin, "admin", ["admin"]
+  let authority;
+  try {
+    authority = JSON.parse(authorityString);
+  } catch (e) {
+    authority = authorityString;
+  }
+  if (typeof authority === 'string') {
+    return [authority];
+  }
+  return authority || ['admin'];
 }
-/**
- * 设置权限
- */  
+
 export function setAuthority(authority) {
-  return localStorage.setItem('antd-pro-authority', authority);
+  const proAuthority = typeof authority === 'string' ? [authority] : authority;
+  return localStorage.setItem('antd-pro-authority', JSON.stringify(proAuthority));
 }

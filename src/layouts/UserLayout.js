@@ -1,90 +1,70 @@
-/**
- * 登录布局
- */
-import React from 'react';
-
-import DocumentTitle from 'react-document-title';
+import React, { Fragment } from 'react';
+import { formatMessage } from 'umi/locale';
+import Link from 'umi/link';
 import { Icon } from 'antd';
-// 经授权的
-import Authorized from '../utils/Authorized';
-import {Switch,Link,Route,Redirect} from 'react-router-dom'
-import GlobalFooter from 'ant-design-pro/lib/GlobalFooter';
-import { getRoutes } from '../utils/utils';
+import GlobalFooter from '@/components/GlobalFooter';
+import SelectLang from '@/components/SelectLang';
 import styles from './UserLayout.less';
 import logo from '../assets/logo.svg';
-import LoginPage from '../routes/login/index'
-// 获取授权
-import { getAuthority } from '../utils/authority';
 
-const links = [{
-  key: 'help',
-  title: '帮助',
-  href: '',
-}, {
-  key: 'privacy',
-  title: '隐私',
-  href: '',
-}, {
-  key: 'terms',
-  title: '条款',
-  href: '',
-}];
+const links = [
+  {
+    key: 'help',
+    title: formatMessage({ id: 'layout.user.link.help' }),
+    href: '',
+  },
+  {
+    key: 'privacy',
+    title: formatMessage({ id: 'layout.user.link.privacy' }),
+    href: '',
+  },
+  {
+    key: 'terms',
+    title: formatMessage({ id: 'layout.user.link.terms' }),
+    href: '',
+  },
+];
 
-const copyright = <div>Copyright <Icon type="copyright" /> 2018 润安科技软件部出品</div>;
+const copyright = (
+  <Fragment>
+    Copyright <Icon type="copyright" /> 2018 蚂蚁金服体验技术部出品
+  </Fragment>
+);
 
 class UserLayout extends React.PureComponent {
-  
-  getPageTitle() {
-    const { routerData, location } = this.props;
-    const { pathname } = location;
-    let title = 'Ant Design Pro';
-    if (routerData[pathname] && routerData[pathname].name) {
-      title = `${routerData[pathname].name} - Ant Design Pro`;
-    }
-    return title;
-  }
+  // @TODO title
+  // getPageTitle() {
+  //   const { routerData, location } = this.props;
+  //   const { pathname } = location;
+  //   let title = 'Ant Design Pro';
+  //   if (routerData[pathname] && routerData[pathname].name) {
+  //     title = `${routerData[pathname].name} - Ant Design Pro`;
+  //   }
+  //   return title;
+  // }
 
   render() {
-    const { routerData, match } = this.props;
+    const { children } = this.props;
     return (
-      <DocumentTitle title={this.getPageTitle()}>
-        <div className={styles.container} style={{ minHeight: '100vh' }}>
-          <div className={styles.content}>
-            <div className={styles.top}>
-              <div className={styles.header}>
-                <Link to="/">
-                  <img alt="logo" className={styles.logo} src={logo} />
-                  <span className={styles.title}>OA 管理系统</span>
-                </Link>
-              </div>
-              <div className={styles.desc}>OA管理系统 仅用于润安科技内部办公使用</div>
-            </div>
-            <Switch>
-                    
-              {getRoutes(match.path, routerData).map(item =>
-                (
-                  // <AuthorizedRoute
-                  //   key={item.key}
-                  //   path={item.path}
-                  //   component={item.component}
-                  //   exact={item.exact}
-                  //   authority={item.authority}
-                  //   redirectPath="/exception/403"
-                  // />
-                  <Route
-                    key={item.key}
-                    path={item.path}
-                    component={item.component}
-                    exact={item.exact}
-                  />
-                )
-              )}
-              <Redirect exact from="/user" to="/user/login" />
-            </Switch>
-          </div>
-          <GlobalFooter links={links} copyright={copyright} />
+      // @TODO <DocumentTitle title={this.getPageTitle()}>
+      <div className={styles.container}>
+        <div className={styles.lang}>
+          <SelectLang />
         </div>
-      </DocumentTitle>
+        <div className={styles.content}>
+          <div className={styles.top}>
+            <div className={styles.header}>
+              <Link to="/">
+                <img alt="logo" className={styles.logo} src={logo} />
+                <span className={styles.title}>Ant Design</span>
+              </Link>
+            </div>
+            <div className={styles.desc}>Ant Design 是西湖区最具影响力的 Web 设计规范</div>
+          </div>
+          {children}
+        </div>
+        <GlobalFooter links={links} copyright={copyright} />
+      </div>
     );
   }
 }

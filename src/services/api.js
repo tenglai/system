@@ -1,161 +1,126 @@
-/**
- * 请求入口
- * 请求方法封装
- */
-import axios from 'axios';
-// 请求函数封装
-import request from '../utils/request';
-// 登录页数据
-import data from '../mock/loginMock';
-// 用户列表数据
-import  '../mock/userdata'
+import { stringify } from 'qs';
+import request from '@/utils/request';
 
-// 获取用户列表数据
-export async function getuserlist(){
-  return axios.get('/api/userdata').then(function(response){
-    return response.data;
-  })
+export async function queryProjectNotice() {
+  return request('/api/project/notice');
 }
 
-// 异步操作 获取登录数据
-export async function login(param){
-  const { username, password, type } = param;
-
-  return axios.get('/api/login').then(function(response){
-    if(username === 'admin' && password === '888888'){
-      return {
-      	status: 'ok',
-      	type: type,
-        currentAuthority:'admin'
-      }
-    }else if(username === 'user' && password === '123456'){
-      return {
-        status: 'ok',
-        type,
-        currentAuthority: 'user'
-      }
-    }else{
-      return {
-      	status: 'error',
-      	type: type,
-      }
-    }
-  })
+export async function queryActivities() {
+  return request('/api/activities');
 }
 
-// 当前用户信息
-export async function getCurrent(param){
-  return {
-    $desc: "获取当前用户接口",
-    $params: {
-      pageSize: {
-        desc: '分页',
-        exp: 2,
-      },
-    },
-    $body: {
-      name: 'Serati Ma',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
-      userid: '00000001',
-      notifyCount: 12,
-    },
-  } 
+export async function queryRule(params) {
+  return request(`/api/rule?${stringify(params)}`);
 }
 
-// 通知栏数据
-export async function queryNotices(param){
-  return [ 
-    {
-      id: '000000001',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
-      title: '你收到了 14 份新周报',
-      datetime: '2017-08-09',
-      type: '通知',
+export async function removeRule(params) {
+  return request('/api/rule', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'delete',
     },
-    {
-      id: '000000002',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
-      title: '你推荐的 曲妮妮 已通过第三轮面试',
-      datetime: '2017-08-08',
-      type: '通知',
+  });
+}
+
+export async function addRule(params) {
+  return request('/api/rule', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'post',
     },
-    {
-      id: '000000003',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png',
-      title: '这种模板可以区分多种通知类型',
-      datetime: '2017-08-07',
-      read: true,
-      type: '通知',
+  });
+}
+
+export async function updateRule(params) {
+  return request('/api/rule', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'update',
     },
-    {
-      id: '000000004',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png',
-      title: '左侧图标用于区分不同的类型',
-      datetime: '2017-08-07',
-      type: '通知',
+  });
+}
+
+export async function fakeSubmitForm(params) {
+  return request('/api/forms', {
+    method: 'POST',
+    body: params,
+  });
+}
+
+export async function fakeChartData() {
+  return request('/api/fake_chart_data');
+}
+
+export async function queryTags() {
+  return request('/api/tags');
+}
+
+export async function queryBasicProfile() {
+  return request('/api/profile/basic');
+}
+
+export async function queryAdvancedProfile() {
+  return request('/api/profile/advanced');
+}
+
+export async function queryFakeList(params) {
+  return request(`/api/fake_list?${stringify(params)}`);
+}
+
+export async function removeFakeList(params) {
+  const { count = 5, ...restParams } = params;
+  return request(`/api/fake_list?count=${count}`, {
+    method: 'POST',
+    body: {
+      ...restParams,
+      method: 'delete',
     },
-    {
-      id: '000000005',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
-      title: '内容不要超过两行字，超出时自动截断',
-      datetime: '2017-08-07',
-      type: '通知',
+  });
+}
+
+export async function addFakeList(params) {
+  const { count = 5, ...restParams } = params;
+  return request(`/api/fake_list?count=${count}`, {
+    method: 'POST',
+    body: {
+      ...restParams,
+      method: 'post',
     },
-    {
-      id: '000000006',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
-      title: '曲丽丽 评论了你',
-      description: '描述信息描述信息描述信息',
-      datetime: '2017-08-07',
-      type: '消息',
+  });
+}
+
+export async function updateFakeList(params) {
+  const { count = 5, ...restParams } = params;
+  return request(`/api/fake_list?count=${count}`, {
+    method: 'POST',
+    body: {
+      ...restParams,
+      method: 'update',
     },
-    {
-      id: '000000007',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
-      title: '朱偏右 回复了你',
-      description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
-      datetime: '2017-08-07',
-      type: '消息',
-    },
-    {
-      id: '000000008',
-      avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
-      title: '标题',
-      description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
-      datetime: '2017-08-07',
-      type: '消息',
-    },
-    {
-      id: '000000009',
-      title: '任务名称',
-      description: '任务需要在 2017-01-12 20:00 前启动',
-      extra: '未开始',
-      status: 'todo',
-      type: '待办',
-    },
-    {
-      id: '000000010',
-      title: '第三方紧急代码变更',
-      description: '冠霖提交于 2017-01-06，需在 2017-01-07 前完成代码变更任务',
-      extra: '马上到期',
-      status: 'urgent',
-      type: '待办',
-    },
-    {
-      id: '000000011',
-      title: '信息安全考试',
-      description: '指派竹尔于 2017-01-09 前完成更新并发布',
-      extra: '已耗时 8 天',
-      status: 'doing',
-      type: '待办',
-    },
-    {
-      id: '000000012',
-      title: 'ABCD 版本发布',
-      description: '冠霖提交于 2017-01-06，需在 2017-01-07 前完成代码变更任务',
-      extra: '进行中',
-      status: 'processing',
-      type: '待办',
-    },
-  ];
-} 
+  });
+}
+
+export async function fakeAccountLogin(params) {
+  return request('/api/login/account', {
+    method: 'POST',
+    body: params,
+  });
+}
+
+export async function fakeRegister(params) {
+  return request('/api/register', {
+    method: 'POST',
+    body: params,
+  });
+}
+
+export async function queryNotices() {
+  return request('/api/notices');
+}
+
+export async function getFakeCaptcha(mobile) {
+  return request(`/api/captcha?mobile=${mobile}`);
+}
